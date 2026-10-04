@@ -20,6 +20,9 @@ inputs:
     description: The deploy.yaml to deploy. Several applications deploy in order, one path per line.
     required: false
     default: deploy.yaml
+  applications:
+    description: The applications of a shipwick.yaml to deploy, one name per line or separated by spaces (shipwick deploy <name>...). Default, every application in the file. Needs shipwick 0.8.0 or later.
+    required: false
   env-file:
     description: A NAME=value file that fills in ${NAME} placeholders (shipwick deploy --env-file). One path per line.
     required: false
@@ -53,6 +56,7 @@ runs:
         INPUT_TOKEN: ${{ inputs.token }}
         INPUT_IMAGE: ${{ inputs.image }}
         INPUT_FILE: ${{ inputs.file }}
+        INPUT_APPLICATIONS: ${{ inputs.applications }}
         INPUT_ENV_FILE: ${{ inputs.env-file }}
         INPUT_VERSION: ${{ inputs.version }}
         INPUT_NO_WAIT: ${{ inputs.no-wait }}

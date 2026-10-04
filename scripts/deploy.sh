@@ -7,6 +7,7 @@
 #   INPUT_TOKEN       a deploy token                                required
 #   INPUT_IMAGE       --image                                       optional
 #   INPUT_FILE        -f, one path per line                         default deploy.yaml
+#   INPUT_APPLICATIONS  names out of a shipwick.yaml, by line or space  optional, shipwick 0.8.0+
 #   INPUT_ENV_FILE    --env-file, one path per line                 optional
 #   INPUT_VERSION     release tag of the CLI, e.g. v0.3.1           default: latest release
 #   INPUT_NO_WAIT     "true" adds --no-wait                         optional
@@ -82,6 +83,24 @@ case "$tag" in
 esac
 base="https://github.com/$REPO/releases/download/$tag"
 
+# The names of the applications to deploy. They become arguments of the CLI,
+# so each must be an application's name and nothing that reads as a flag.
+applications=()
+for name in ${INPUT_APPLICATIONS:-}; do
+    case "$name" in
+        ""|-*|*[!a-z0-9-]*) die "The input 'applications' takes application names such as 'api', one per line or separated by spaces, not '$name'." ;;
+    esac
+    applications+=("$name")
+done
+if [ "${#applications[@]}" -gt 0 ]; then
+    # shipwick deploy takes names from 0.8.0 on; an older one would answer
+    # with its usage.
+    minor="${tag#v}"; major="${minor%%.*}"; minor="${minor#*.}"; minor="${minor%%.*}"
+    if [ "$major" = 0 ] && [ "$minor" -lt 8 ]; then
+        die "The input 'applications' needs shipwick 0.8.0 or later; this run uses $tag. Remove the 'version' input, or set it to v0.8.0 or later."
+    fi
+fi
+
 # --- download and verify -----------------------------------------------------------
 
 work="$(mktemp -d)"
@@ -138,6 +157,7 @@ while IFS= read -r line; do
     [ -z "$line" ] || args+=(--env-file "$line")
 done <<< "${INPUT_ENV_FILE:-}"
 if is_true "${INPUT_NO_WAIT:-}"; then args+=(--no-wait); fi
+if [ "${#applications[@]}" -gt 0 ]; then args+=("${applications[@]}"); fi
 
 # stdout goes through tee so the outputs can be read off it afterwards; the
 # CLI sees a pipe and prints plain text. stderr (warnings) passes straight
