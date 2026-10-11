@@ -9,7 +9,7 @@
 #   INPUT_FILE        -f, one path per line                         default deploy.yaml
 #   INPUT_APPLICATIONS  names out of a shipwick.yaml, by line or space  optional, shipwick 0.8.0+
 #   INPUT_ENV_FILE    --env-file, one path per line                 optional
-#   INPUT_VERSION     release tag of the CLI, e.g. v0.3.1           default: latest release
+#   INPUT_VERSION     release tag of the CLI, e.g. v0.8.0           default: latest release
 #   INPUT_NO_WAIT     "true" adds --no-wait                         optional
 #   INPUT_CHECK_ONLY  "true" stops after `shipwick --version`       for testing
 #
@@ -79,7 +79,7 @@ if [ -z "$tag" ]; then
 fi
 case "$tag" in
     v[0-9]*.[0-9]*.[0-9]*) ;;
-    *) die "The input 'version' must be a release tag such as v0.3.1, not '$tag'." ;;
+    *) die "The input 'version' must be a release tag such as v0.8.0, not '$tag'." ;;
 esac
 base="https://github.com/$REPO/releases/download/$tag"
 

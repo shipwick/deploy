@@ -28,7 +28,7 @@ jobs:
       fail-fast: false
       matrix:
         os: [ubuntu-latest, ubuntu-24.04-arm, macos-latest]
-        version: [v0.3.1, ""]
+        version: [v0.8.0, ""]
     steps:
       - uses: actions/checkout@v7
       - uses: ./
@@ -51,7 +51,7 @@ jobs:
         id: run
         continue-on-error: true
         with:
-          version: v0.3.1
+          version: v0.8.0
           check-only: true
       - if: steps.run.outcome != 'failure'
         shell: bash
