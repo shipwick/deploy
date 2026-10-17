@@ -59,7 +59,7 @@ jobs:
 | `image` | Deploy this image instead of the one in `deploy.yaml` (`--image`) | |
 | `file` | The `deploy.yaml` to deploy. A `shipwick.yaml` deploys its applications at the same time, in dependency order. One path per line deploys several `deploy.yaml` in order, stopping at the first failure (`-f`, repeated); `--image` then does not apply | `deploy.yaml` |
 | `env-file` | A `NAME=value` file that fills in `${NAME}` placeholders before the file is sent (`--env-file`). One path per line | |
-| `version` | The release of the CLI to use, such as `v0.8.0` | the latest release |
+| `version` | The release of the CLI to use, such as `v1.0.0` | the latest release |
 | `applications` | The applications of a `shipwick.yaml` to deploy, one name per line or separated by spaces (`shipwick deploy <name>...`). With exactly one, `image` applies to it. Needs shipwick 0.8.0 or later | every application in the file |
 | `no-wait` | Start the deployment and return at once (`--no-wait`) | `false` |
 | `check-only` | For testing this action: download and verify the CLI, print its version, stop | `false` |

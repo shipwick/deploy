@@ -27,7 +27,7 @@ inputs:
     description: A NAME=value file that fills in ${NAME} placeholders (shipwick deploy --env-file). One path per line.
     required: false
   version:
-    description: The release of the shipwick CLI to use, such as v0.8.0. Default, the latest release.
+    description: The release of the shipwick CLI to use, such as v1.0.0. Default, the latest release.
     required: false
   no-wait:
     description: Start the deployment and return at once instead of waiting for its result.
